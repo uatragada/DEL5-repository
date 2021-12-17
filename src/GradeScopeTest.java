@@ -156,43 +156,40 @@ public class GradeScopeTest {
 				int inFlightObserved;
 				int inSlotsObserved;
 				int remainingExpected = 0;
-				int inFlightExpected = 0;
+				int inFlightExpected = 1;
 				int inSlotsExpected = 0;
+				
 				while(logics[i].advanceStep())
 				{
 					stepCounter++;
 					remainingObserved = logics[i].getRemainingBeanCount();
 					inFlightObserved = getInFlightBeanCount(logics[i], logicSlotCounts[i]);
 					inSlotsObserved = getInSlotsBeanCount(logics[i], logicSlotCounts[i]);
-					
 
-					//remaining expected should be beeanCount - how many we have sent out, if that is negative then 0.
-					if( beanCount - counter > 0)
+					//remaining expected should be beanCount - how many we have sent out, if that is negative then 0.
+					if( beanCount - stepCounter - 1 > 0)
 					{
-						remainingExpected = beanCount - counter;
+						remainingExpected = beanCount - stepCounter - 1;
 					}
 					else
 					{
 						remainingExpected = 0;
 					}
 					
-
-					if(counter < logicSlotCounts[i])
+					//if the amount of beans sent out is less than how many slots there are increase in flight
+					if(stepCounter < logicSlotCounts[i])
 					{
-						inFlightExpected++;
-						inSlotsExpected = 0;
 					}
-					else if(counter > beanCount - logicSlotCounts[i])
+					//if the amount of beans sent out becomes higher than beancount - slots then beans arent being sent out anymore
+					else if(stepCounter > beanCount - logicSlotCounts[i])
 					{
-						inFlightExpected--;
-						inSlotsExpected++; ;
+						inSlotsExpected++;
 					}
 					else
 					{
-						inFlightExpected == logicSlotCounts[i];
 						inSlotsExpected++;
 					}
-					
+					inFlightExpected = beanCount - inSlotsExpected - remainingExpected;
 				
 					assertEquals(failString + ". Check on remaining bean count",
 						remainingExpected, remainingObserved);
@@ -204,6 +201,7 @@ public class GradeScopeTest {
 				remainingExpected = 0;
 				inFlightExpected = 0;
 				inSlotsExpected = 0;
+				stepCounter = 0;
 				
 			}
 		}
