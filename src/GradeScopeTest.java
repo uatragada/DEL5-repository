@@ -221,7 +221,32 @@ public class GradeScopeTest {
 	 */
 	@Test
 	public void testAdvanceStepSkillMode() {
-		// TODO: Implement
+			//RAND.NEXTGAUUSIAN??
+			// TODO: Implement
+			
+			rand = Mockito.mock(Random.class);
+			Mockito.when(rand.nextGaussian()).thenReturn(0.0);
+			
+			Bean[] beans = createBeans(10, 200, false);
+			
+			logics[1].reset(beans);
+			
+			
+		
+			
+
+			while(logics[1].advanceStep())
+			{
+				
+			}
+			
+			/*assertEquals(failString + ". Check on remaining bean count",
+			logics[i].getSlotBeanCount(5), 200);
+			assertEquals(failString + ". Check on in-flight bean count",
+			logics[i].getSlotBeanCount(0), 0);*/
+			assertEquals(200, logics[1].getSlotBeanCount(5));
+			assertEquals(0, logics[1].getSlotBeanCount(0));
+
 	}
 
 	/**
