@@ -226,14 +226,10 @@ public class GradeScopeTest {
 			
 			rand = Mockito.mock(Random.class);
 			Mockito.when(rand.nextGaussian()).thenReturn(0.0);
-			
+
 			Bean[] beans = createBeans(10, 200, false);
 			
 			logics[1].reset(beans);
-			
-			
-		
-			
 
 			while(logics[1].advanceStep())
 			{
@@ -334,6 +330,7 @@ public class GradeScopeTest {
 	@Test
 	public void testMain() {
 		// TODO: Implement using out.toString() to get output stream
+		
 	}
 
 }
